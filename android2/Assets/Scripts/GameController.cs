@@ -14,6 +14,8 @@ public class GameController : MonoBehaviour {
 	public Text ScoreText;
 	public Button FinishButton;
 	public Button ExitButton;
+	public Button RepeatButton;
+	public Button NextButton;
 
 	private BaseBuilder BaseBuilder;
 
@@ -24,6 +26,9 @@ public class GameController : MonoBehaviour {
 	{
 		FinishButton.gameObject.SetActive(false);
 		EndScreen.SetActive(false);
+
+		//RepeatButton.GetComponent<RectTransform>().anchoredPosition
+		NextButton.gameObject.SetActive(false);
 
 		BaseBuilder = BaseObject.GetComponent<BaseBuilder>();
 		placeables = BaseBuilder.Placeables;
@@ -45,10 +50,23 @@ public class GameController : MonoBehaviour {
 		}
 		dist = dist / placeables.Count;
 
+		//Win should be ~0.2 or less score
+
+		//if win show next button and reposition replay button
+		if (dist < 0.3f)
+		{
+			RectTransform rect = RepeatButton.GetComponent<RectTransform>();
+			rect.anchoredPosition = new Vector3(-5.8f, rect.anchoredPosition.y, 0);
+			NextButton.gameObject.SetActive(true);
+		}
+
 		//Show score screen
 		EndScreen.SetActive(true);
 		ScoreText.text = dist.ToString();
 		FinishButton.gameObject.SetActive(false);
+
+		
+
 	}
 
 	//Restart scene
@@ -60,6 +78,11 @@ public class GameController : MonoBehaviour {
 	public void ExitLevel()
 	{
 		SceneManager.LoadScene("menu");
+	}
+
+	public void NextLevel()
+	{
+		SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
 	}
 
 	//Coroutine stuff -----------------------------------------------
