@@ -6,12 +6,16 @@ using UnityEngine;
 public class BaseBuilder : MonoBehaviour
 {
 
+	public Sprite BaseImage;
 	public Sprite BackgroundImage;
 	public List<Sprite> Sprites;
 
 	public bool generateBackground = false;
+	public bool generateBase = false;
 	public bool generateAnchors = false;
 
+	[HideInInspector]
+	public GameObject BaseImageObject;
 	[HideInInspector]
 	public GameObject Background;
 	[HideInInspector]
@@ -29,12 +33,29 @@ public class BaseBuilder : MonoBehaviour
 				Background = new GameObject();
 				Background.name = "Background";
 				Background.transform.parent = gameObject.transform;
-				Background.transform.position = new Vector3(0f, 0f, 1f);
+				Background.transform.position = new Vector3(0f, -3.49f, 2f);
 				Background.AddComponent<SpriteRenderer>().sprite = BackgroundImage;
 			}
 			else
 			{
 				Background.GetComponent<SpriteRenderer>().sprite = BackgroundImage;
+			}
+		}
+
+		if(generateBase)
+		{
+			generateBase = false;
+			if(BaseImageObject == null)
+			{
+				BaseImageObject = new GameObject();
+				BaseImageObject.name = "Base Image";
+				BaseImageObject.transform.parent = gameObject.transform;
+				BaseImageObject.transform.position = new Vector3(0f, 0f, 1f);
+				BaseImageObject.AddComponent<SpriteRenderer>().sprite = BaseImage;
+			}
+			else
+			{
+				BaseImageObject.GetComponent<SpriteRenderer>().sprite = BaseImage;
 			}			
 		}
 
