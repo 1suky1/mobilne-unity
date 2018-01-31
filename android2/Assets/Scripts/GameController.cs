@@ -6,10 +6,15 @@ using UnityEngine.UI;
 
 public class GameController : MonoBehaviour {
 
+	[Header("Base Object")]
 	public GameObject BaseObject;
+
+	[Header("UI")]
 	public GameObject EndScreen;
 	public Text ScoreText;
 	public Button FinishButton;
+	public Button ExitButton;
+
 	private BaseBuilder BaseBuilder;
 
 	[HideInInspector]
@@ -52,6 +57,10 @@ public class GameController : MonoBehaviour {
 		SceneManager.LoadScene(SceneManager.GetActiveScene().name);
 	}
 
+	public void ExitLevel()
+	{
+		SceneManager.LoadScene("menu");
+	}
 
 	//Coroutine stuff -----------------------------------------------
 
@@ -84,6 +93,7 @@ public class GameController : MonoBehaviour {
 		//Grid limit is 4x2 ::::
 		//width limit is from -2.7 to 2.7
 		// Y = -5.3 for top row, -7.8 for 2nd row
+		//not exactly dnamic atm
 		float x_min = -2.7f;
 		float x_max = 2.7f;
 		float y_top = -5.3f;
