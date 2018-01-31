@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class GameController : MonoBehaviour {
@@ -8,6 +9,7 @@ public class GameController : MonoBehaviour {
 	public GameObject BaseObject;
 	public GameObject EndScreen;
 	public Text ScoreText;
+	public Button FinishButton;
 	private BaseBuilder BaseBuilder;
 
 	[HideInInspector]
@@ -15,6 +17,9 @@ public class GameController : MonoBehaviour {
 
 	public void Start()
 	{
+		FinishButton.gameObject.SetActive(false);
+		EndScreen.SetActive(false);
+
 		BaseBuilder = BaseObject.GetComponent<BaseBuilder>();
 		placeables = BaseBuilder.Placeables;
 
@@ -28,14 +33,25 @@ public class GameController : MonoBehaviour {
 		{
 			GameObject anchor = placeable.transform.parent.gameObject;
 			dist += Vector3.Distance(placeable.transform.position, anchor.transform.position);
-			//print("Distance between " + placeable.name + " and " + anchor.name + " is: "+ dist);
+
+			//Disable dragging on placeables
+			placeable.GetComponent<Drag>().enabled = false;
+			placeable.GetComponent<Collider2D>().enabled = false;
 		}
 		dist = dist / placeables.Count;
 
 		//Show score screen
 		EndScreen.SetActive(true);
 		ScoreText.text = dist.ToString();
+		FinishButton.gameObject.SetActive(false);
 	}
+
+	//Restart scene
+	public void Repeat()
+	{
+		SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+	}
+
 
 	//Coroutine stuff -----------------------------------------------
 
@@ -45,15 +61,13 @@ public class GameController : MonoBehaviour {
 		foreach (GameObject p in placeables)
 		{
 			SpriteRenderer renderer = p.GetComponent<SpriteRenderer>();
-			renderer.FadeSprite
-				(this, 2,
-				(SpriteRenderer r) => 
+			renderer.FadeSprite(this, 2, (SpriteRenderer r) => 
 				{
 					UnfadeSprites(r);
 					RepositionPlaceables();
 					r.gameObject.GetComponent<BoxCollider2D>().enabled = true;
-				}
-				);
+					FinishButton.gameObject.SetActive(true);
+				});
 		}
 	}
 
