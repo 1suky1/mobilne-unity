@@ -1,10 +1,13 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class GameController : MonoBehaviour {
 
 	public GameObject BaseObject;
+	public GameObject EndScreen;
+	public Text ScoreText;
 	private BaseBuilder BaseBuilder;
 
 	[HideInInspector]
@@ -20,12 +23,18 @@ public class GameController : MonoBehaviour {
 
 	public void Finish()
 	{
+		float dist = 0f;
 		foreach (GameObject placeable in placeables)
 		{
 			GameObject anchor = placeable.transform.parent.gameObject;
-			float dist = Vector3.Distance(placeable.transform.position, anchor.transform.position);
-			print("Distance between " + placeable.name + " and " + anchor.name + " is: "+ dist);
+			dist += Vector3.Distance(placeable.transform.position, anchor.transform.position);
+			//print("Distance between " + placeable.name + " and " + anchor.name + " is: "+ dist);
 		}
+		dist = dist / placeables.Count;
+
+		//Show score screen
+		EndScreen.SetActive(true);
+		ScoreText.text = dist.ToString();
 	}
 
 	//Coroutine stuff -----------------------------------------------
