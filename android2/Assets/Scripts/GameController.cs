@@ -12,7 +12,7 @@ public class GameController : MonoBehaviour {
 
 	[Header("UI")]
 	public GameObject EndScreen;
-	public Text ScoreText;
+	//public Text ScoreText;
 	public Button FinishButton;
 	public Button ExitButton;
 	public Button RepeatButton;
@@ -78,7 +78,7 @@ public class GameController : MonoBehaviour {
 
 		//Show score screen
 		EndScreen.SetActive(true);
-		ScoreText.text = score.ToString();
+		//ScoreText.text = score.ToString();
 		DisplayStars(score, Stars);
 		FinishButton.gameObject.SetActive(false);
 		SetPlayerScore(score);
