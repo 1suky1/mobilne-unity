@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -16,6 +17,11 @@ public class GameController : MonoBehaviour {
 	public Button ExitButton;
 	public Button RepeatButton;
 	public Button NextButton;
+	public List<GameObject> Stars;
+
+	[Header("Sprites")]
+	public Sprite FullStar;
+	public Sprite HalfStar;
 
 	private BaseBuilder BaseBuilder;
 
@@ -38,6 +44,7 @@ public class GameController : MonoBehaviour {
 
 	public void Finish()
 	{
+		//calculate average distance between all placeables
 		float dist = 0f;
 		foreach (GameObject placeable in placeables)
 		{
@@ -50,38 +57,82 @@ public class GameController : MonoBehaviour {
 		}
 		dist = dist / placeables.Count;
 
-		//Win should be ~0.2 or less score
+		//normalize distance to score
+		float score = 1f - dist;
 
+		//Win should be ~0.2 or less dist
+		/* score
+		 * 0.75 = 1 star
+		 * 0.8 = 1.5 star
+		 * 0.82 = 2 star
+		 * 0.85 = 2.5 star
+		 * 0.9 = 3 star
+		 */
 		//if win show next button and reposition replay button
-		if (dist < 0.3f)
+		if (score >= 0.75f)
 		{
 			RectTransform rect = RepeatButton.GetComponent<RectTransform>();
 			rect.anchoredPosition = new Vector3(-5.8f, rect.anchoredPosition.y, 0);
-			NextButton.gameObject.SetActive(true);
+			NextButton.gameObject.SetActive(true);		
 		}
 
 		//Show score screen
 		EndScreen.SetActive(true);
-		ScoreText.text = dist.ToString();
+		ScoreText.text = score.ToString();
+		DisplayStars(score, Stars);
 		FinishButton.gameObject.SetActive(false);
-
-		
-
+		SetPlayerScore(score);
 	}
 
-	//Restart scene
+	private void DisplayStars(float score, List<GameObject> stars)
+	{
+		if (score >= 0.75f)
+			stars[0].GetComponent<Image>().sprite = FullStar;
+		if (score >= 0.8f)
+			stars[1].GetComponent<Image>().sprite = HalfStar;
+		if (score >= 0.82f)
+			stars[1].GetComponent<Image>().sprite = FullStar;
+		if (score >= 0.85f)
+			stars[2].GetComponent<Image>().sprite = HalfStar;
+		if (score >= 0.9f)
+			stars[2].GetComponent<Image>().sprite = FullStar;
+	}
+
+	private void SetPlayerScore(float score)
+	{
+		string h = "highScore";
+		string s = SceneManager.GetActiveScene().name;
+		float prevScore = 0;
+
+		//Check if there's a previous high score
+		if (PlayerPrefs.HasKey(h+s))
+			prevScore = PlayerPrefs.GetFloat(h + s);
+
+		//If current score is higher than previous, make it new high score
+		if (prevScore < score)
+			PlayerPrefs.SetFloat(h + s, score);
+
+		//Debug.Log("prevscore: " + prevScore);
+	}
+
+
+	//Buttons -------------------------------------------------------
+
 	public void Repeat()
 	{
+		PlayerPrefs.Save();
 		SceneManager.LoadScene(SceneManager.GetActiveScene().name);
 	}
 
 	public void ExitLevel()
 	{
+		PlayerPrefs.Save();
 		SceneManager.LoadScene("menu");
 	}
 
 	public void NextLevel()
 	{
+		PlayerPrefs.Save();
 		SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
 	}
 
