@@ -13,7 +13,7 @@ public class PlayerController : MonoBehaviour {
 	void Start () {
         //rigidbody = GetComponent<Rigidbody2D>();
         animator = GetComponent<Animator>();
-        allowMoving = true;
+        allowMoving = false;
     }
 	
 	// Update is called once per frame
@@ -23,7 +23,7 @@ public class PlayerController : MonoBehaviour {
         if(allowMoving)
         {
             Movement();
-            animator.SetFloat("speed", 1);
+            animator.SetFloat("speed", 1.5f);
         }
         else
         {

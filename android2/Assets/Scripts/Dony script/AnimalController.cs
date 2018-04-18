@@ -10,6 +10,7 @@ public class AnimalController : MonoBehaviour {
     public Canvas canvas;
     AudioSource source;
     SpriteRenderer spriteRenderer;
+	Sprite sprite;
 	// Use this for initialization
 	void Start () {
         //source-u nije dodan clip, nego se dodaje na temelju answer-a
@@ -26,9 +27,9 @@ public class AnimalController : MonoBehaviour {
         source.clip = Resources.Load<AudioClip>("Sounds/" + GameManagerScript.answer);
 
         var texture = Resources.Load<Texture2D>("Sprites/Animals/" + GameManagerScript.answer);
-        var sprite = Sprite.Create(texture, new Rect(0, 0, texture.width, texture.height), new Vector2(0.5f, 0.5f));
+        sprite = Sprite.Create(texture, new Rect(0, 0, texture.width, texture.height), new Vector2(0.5f, 0.5f));
         sprite.name = texture.name;
-        spriteRenderer.sprite = sprite;
+        //spriteRenderer.sprite = sprite;
     }
 	
 	// Update is called once per frame
@@ -51,6 +52,12 @@ public class AnimalController : MonoBehaviour {
             //spriteRenderer.sortingOrder = 1;
             playerScript.allowMoving = false;
             canvas.gameObject.SetActive(true);
-        }
+			//spriteRenderer.sprite = sprite;
+		}
     }
+
+	public void UpdateSprite()
+	{
+		spriteRenderer.sprite = sprite;
+	}
 }

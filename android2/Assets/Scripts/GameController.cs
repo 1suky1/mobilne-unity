@@ -30,6 +30,8 @@ public class GameController : MonoBehaviour {
 
 	public void Start()
 	{
+		Screen.orientation = ScreenOrientation.Portrait;
+
 		FinishButton.gameObject.SetActive(false);
 		EndScreen.SetActive(false);
 

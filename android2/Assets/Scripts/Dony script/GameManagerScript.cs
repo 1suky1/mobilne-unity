@@ -13,6 +13,10 @@ public class GameManagerScript : MonoBehaviour {
     public Canvas canvas;
     //za allowanje movmenta
     public PlayerController playerController;
+
+	public List<GameObject> Events;
+	int numEvent = 0;
+
     //lista pozicija za buttone u canvasu
     //tocan odgovor
     public static string answer;
@@ -24,6 +28,8 @@ public class GameManagerScript : MonoBehaviour {
     AudioSource wrongAnswer;
     private void Start()
     {
+		Screen.orientation = ScreenOrientation.LandscapeLeft;
+
         nextAnswer = false;
         images = Resources.LoadAll<Texture2D>("Sprites/Animals"); //load image za pitanja
         canvas.gameObject.SetActive(false); //disable canvas da se ne vidi na pocetku
@@ -79,7 +85,7 @@ public class GameManagerScript : MonoBehaviour {
     void CheckAnswer()
     {
         //dohvacamo name pritisnutog buttona
-        var imageName = EventSystem.current.currentSelectedGameObject.name;
+		var imageName = EventSystem.current.currentSelectedGameObject.name;
         if (imageName.ToLower().Contains(answer))
         {
             //play applause
@@ -87,12 +93,21 @@ public class GameManagerScript : MonoBehaviour {
             //remove canvas/answer list/button list
             canvas.gameObject.SetActive(false);
             //allow moving
-            playerController.allowMoving = true;
+            //playerController.allowMoving = true;
             //generate random questin/answer
             System.Random r = new System.Random();
             answer = clips[r.Next(clips.Length)].name;
             //flag za generiranje sljedeceg pitanja u animator controlleru
-            nextAnswer = true; 
+            nextAnswer = true; 	
+
+			//Change sprite on event
+			if(numEvent < Events.Count)
+			{
+				Events[numEvent].GetComponent<AnimalController>().UpdateSprite();
+				Events[numEvent].GetComponent<AnimalController>().enabled = false;
+				numEvent++;
+			}
+
         }
             
         else
