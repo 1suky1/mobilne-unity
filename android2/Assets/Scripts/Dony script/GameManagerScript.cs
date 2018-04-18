@@ -26,19 +26,23 @@ public class GameManagerScript : MonoBehaviour {
     AudioClip[] clips;
     AudioSource rightAnswer;
     AudioSource wrongAnswer;
-    private void Start()
-    {
-		Screen.orientation = ScreenOrientation.LandscapeLeft;
 
+	private void Awake()
+	{
+		Screen.orientation = ScreenOrientation.LandscapeLeft;
+	}
+
+	private void Start()
+    {
         nextAnswer = false;
         images = Resources.LoadAll<Texture2D>("Sprites/Animals"); //load image za pitanja
         canvas.gameObject.SetActive(false); //disable canvas da se ne vidi na pocetku
         positons = new List<Vector3>() //pozicije za buttone/odgovore
         {
-            new Vector3(300,300,0),
-            new Vector3(500,300,0),
-            new Vector3(300,100,0),
-            new Vector3(500,100,0)
+            new Vector3(-100,100,0),
+            new Vector3(100,100,0),
+            new Vector3(-100,-100,0),
+            new Vector3(100,-100,0)
         };
 
         //load zvukova za korektan odgovor
@@ -76,8 +80,10 @@ public class GameManagerScript : MonoBehaviour {
         mImage.sprite = image;
         mButton.targetGraphic = mImage;
 
-        button.transform.position = positons[i];
-        button.transform.SetParent(canvas.transform);
+		button.transform.SetParent(canvas.transform);
+		button.GetComponent<RectTransform>().anchoredPosition = positons[i];
+		//button.transform.position = positons[i];
+        
         button.GetComponent<Button>().onClick.AddListener(CheckAnswer); //metoda za provjeru tocvnosti odgovora
         button.name = image.name; //stavljamo name kak bi poslje mogli dohvatit name pritisnutog buttona
     }

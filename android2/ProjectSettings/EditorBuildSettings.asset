@@ -5,9 +5,12 @@ EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Scenes:
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/menu.unity
     guid: 7d020d1151254944aba359f7ae4ae293
+  - enabled: 1
+    path: Assets/Scenes/Dony_lvl.unity
+    guid: 0d28d8159e64ff74abc95af8331dc857
   - enabled: 1
     path: Assets/Scenes/level1.unity
     guid: f42c3c9791072ce4185554da7a270812

@@ -28,9 +28,14 @@ public class GameController : MonoBehaviour {
 	[HideInInspector]
 	public List<GameObject> placeables;
 
-	public void Start()
+	public void Awake()
 	{
 		Screen.orientation = ScreenOrientation.Portrait;
+	}
+
+	public void Start()
+	{
+		
 
 		FinishButton.gameObject.SetActive(false);
 		EndScreen.SetActive(false);

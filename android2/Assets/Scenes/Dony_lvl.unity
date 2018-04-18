@@ -470,9 +470,19 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &458606077 stripped
+GameObject:
+  m_PrefabParentObject: {fileID: 1957978770018838, guid: 354f8a5b07da9fb4985217e571a7d51a,
+    type: 2}
+  m_PrefabInternal: {fileID: 1443274032}
 --- !u!4 &849436317 stripped
 Transform:
   m_PrefabParentObject: {fileID: 4846971849230770, guid: 354f8a5b07da9fb4985217e571a7d51a,
+    type: 2}
+  m_PrefabInternal: {fileID: 1488537045}
+--- !u!1 &994226357 stripped
+GameObject:
+  m_PrefabParentObject: {fileID: 1957978770018838, guid: 354f8a5b07da9fb4985217e571a7d51a,
     type: 2}
   m_PrefabInternal: {fileID: 1488537045}
 --- !u!1 &1047673988
@@ -674,6 +684,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   canvas: {fileID: 1504376532}
   playerController: {fileID: 1669079590}
+  Events:
+  - {fileID: 458606077}
+  - {fileID: 994226357}
 --- !u!4 &1138894505
 Transform:
   m_ObjectHideFlags: 0
@@ -1307,12 +1320,12 @@ MonoBehaviour:
   m_Script: {fileID: 1980459831, guid: f70555f144d8491a825f0804e09c671c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_UiScaleMode: 0
+  m_UiScaleMode: 1
   m_ReferencePixelsPerUnit: 100
   m_ScaleFactor: 1
   m_ReferenceResolution: {x: 800, y: 600}
   m_ScreenMatchMode: 0
-  m_MatchWidthOrHeight: 0
+  m_MatchWidthOrHeight: 0.6
   m_PhysicalUnit: 3
   m_FallbackScreenDPI: 96
   m_DefaultSpriteDPI: 96
@@ -1641,7 +1654,7 @@ GameObject:
   - component: {fileID: 1732822846}
   m_Layer: 0
   m_Name: House
-  m_TagString: Untagged
+  m_TagString: House
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
