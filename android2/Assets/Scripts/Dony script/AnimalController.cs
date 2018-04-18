@@ -15,7 +15,7 @@ public class AnimalController : MonoBehaviour {
 	void Start () {
         //source-u nije dodan clip, nego se dodaje na temelju answer-a
         source = GetComponent<AudioSource>();
-        source.volume = 0.5f;
+		source.volume = 0.5f;
         spriteRenderer = GetComponent<SpriteRenderer>();
         LoadComponents();   
     }
@@ -60,5 +60,6 @@ public class AnimalController : MonoBehaviour {
 	public void UpdateSprite()
 	{
 		spriteRenderer.sprite = sprite;
+		transform.localScale *= 3f;
 	}
 }

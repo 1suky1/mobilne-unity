@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
 public class EventTap : MonoBehaviour {
 
@@ -15,10 +16,25 @@ public class EventTap : MonoBehaviour {
 		playerController = Character.GetComponent<PlayerController>();
 	}
 
-	private void OnMouseDown()
+	private void OnMouseUp()
 	{
-		playerController.allowMoving = true;
+		if(Input.GetMouseButtonUp(0))
+		{
+			if (!EventSystem.current.IsPointerOverGameObject())
+			{
+				playerController.allowMoving = true;
+			}
+		}
+		else
+		{
+			if (!EventSystem.current.IsPointerOverGameObject(Input.GetTouch(0).fingerId))
+			{
+				playerController.allowMoving = true;
+			}
+		}
+		
 	}
+
 
 	// Update is called once per frame
 	void Update () {
