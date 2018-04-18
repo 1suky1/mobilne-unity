@@ -14,6 +14,7 @@ public class AnimalController : MonoBehaviour {
 	void Start () {
         //source-u nije dodan clip, nego se dodaje na temelju answer-a
         source = GetComponent<AudioSource>();
+        source.volume = 0.5f;
         spriteRenderer = GetComponent<SpriteRenderer>();
         LoadComponents();   
     }

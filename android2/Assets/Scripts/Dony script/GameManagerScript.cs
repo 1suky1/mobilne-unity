@@ -41,7 +41,9 @@ public class GameManagerScript : MonoBehaviour {
         //load komponenti sa gamemanagera za tocan/netocan odgovor
         AudioSource[] answerClips = GetComponents<AudioSource>(); 
         rightAnswer = answerClips[0];
+        rightAnswer.volume = 0.5f;
         wrongAnswer = answerClips[1];
+        wrongAnswer.volume = 0.5f;
 
         //loadamo random i random sound predstavljamo ko tocan odgovor i na temelju naziva (cat se zovu i image i sound) -
         //u answer spremamo naziv s kojim kasnije provjeravamo tocnost odabranog odgovora

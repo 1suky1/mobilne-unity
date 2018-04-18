@@ -4,18 +4,25 @@ using UnityEngine;
 
 public class Drag : MonoBehaviour {
 
-	//float distance = -1;
-
-	private void OnMouseDrag()
+    //float distance = -1;
+    Vector3 objPos;
+    private void OnMouseDrag()
 	{
-		//Vector3 mousePosition = new Vector3(Input.mousePosition.x, Input.mousePosition.y, 0);
-		Vector3 objPos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-		//print("objPos " + objPos);
+        //Vector3 mousePosition = new Vector3(Input.mousePosition.x, Input.mousePosition.y, 0);
+        objPos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
 		transform.position = new Vector3(objPos.x, objPos.y, 0);
 	}
 
-	// Use this for initialization
-	void Start () {
+    private void OnMouseUp()
+    {
+        Vector3 anchorPos = this.transform.parent.position;
+        float distance = Vector2.Distance(objPos, anchorPos);
+        if (Mathf.Abs(distance) < 1.0f)
+            transform.position = new Vector3(anchorPos.x, anchorPos.y, anchorPos.z);
+    }
+
+    // Use this for initialization
+    void Start () {
 		
 	}
 	
