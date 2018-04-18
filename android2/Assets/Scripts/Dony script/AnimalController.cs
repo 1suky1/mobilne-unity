@@ -8,14 +8,11 @@ public class AnimalController : MonoBehaviour {
     public PlayerController playerScript;
     public GameManagerScript SelectAnswerScript;
     public Canvas canvas;
-    AudioSource source;
     SpriteRenderer spriteRenderer;
 	Sprite sprite;
 	// Use this for initialization
 	void Start () {
         //source-u nije dodan clip, nego se dodaje na temelju answer-a
-        source = GetComponent<AudioSource>();
-		source.volume = 0.5f;
         spriteRenderer = GetComponent<SpriteRenderer>();
         LoadComponents();   
     }
@@ -25,9 +22,8 @@ public class AnimalController : MonoBehaviour {
         //ako je answer null, gamemanagerscirpt jos nije loadan ,da izbjegnemo nepotrebe errorove
         if (GameManagerScript.answer == null)
             return;
-        source.clip = Resources.Load<AudioClip>("Sounds/" + GameManagerScript.answer);
 
-        var texture = Resources.Load<Texture2D>("Sprites/Animals/" + GameManagerScript.answer);
+        var texture = Resources.Load<Texture2D>("Sprites/" + this.tag + "/" + GameManagerScript.answer);
         sprite = Sprite.Create(texture, new Rect(0, 0, texture.width, texture.height), new Vector2(0.5f, 0.5f));
         sprite.name = texture.name;
         //spriteRenderer.sprite = sprite;
@@ -38,7 +34,7 @@ public class AnimalController : MonoBehaviour {
         //ako je odgovoreno pitanje, dize se flag u gamemanagerscripti
         //ako se animalCOntroller loada prije gamemanagerscripte, source.clip ce bit null
         //pa u update provjerimo ako je null, pozovemo load component
-        if(GameManagerScript.nextAnswer || source.clip == null)
+        if(GameManagerScript.nextAnswer || GameManagerScript.answerSound != null)
         {
             LoadComponents();
             GameManagerScript.nextAnswer = false;
@@ -49,7 +45,7 @@ public class AnimalController : MonoBehaviour {
     {
         if (collision.gameObject.tag == "Player")
         {
-            source.Play();
+            GameManagerScript.PlaySound();
             //spriteRenderer.sortingOrder = 1;
             playerScript.allowMoving = false;
             canvas.gameObject.SetActive(true);
