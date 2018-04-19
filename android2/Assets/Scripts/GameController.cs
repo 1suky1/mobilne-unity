@@ -140,6 +140,8 @@ public class GameController : MonoBehaviour {
 	public void NextLevel()
 	{
 		PlayerPrefs.Save();
+        if (SceneManager.GetActiveScene().buildIndex + 1 >= SceneManager.sceneCountInBuildSettings)
+            SceneManager.LoadScene("menu");
 		SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
 	}
 

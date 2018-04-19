@@ -14,7 +14,7 @@ public class EventController : MonoBehaviour {
 	void Start () {
         //source-u nije dodan clip, nego se dodaje na temelju answer-a
         spriteRenderer = GetComponent<SpriteRenderer>();
-        LoadComponents();   
+
     }
 
     void LoadComponents()
@@ -31,26 +31,20 @@ public class EventController : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-        //ako je odgovoreno pitanje, dize se flag u gamemanagerscripti
-        //ako se animalCOntroller loada prije gamemanagerscripte, source.clip ce bit null
-        //pa u update provjerimo ako je null, pozovemo load component
-        if(GameManagerScript.nextAnswer || GameManagerScript.answerSound != null)
-        {
-            LoadComponents();
-            GameManagerScript.nextAnswer = false;
-        }
 		
 	}
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.gameObject.tag == "Player")
         {
+            LoadComponents();
             GameManagerScript.PlaySound();
             //spriteRenderer.sortingOrder = 1;
             playerScript.allowMoving = false;
             canvas.gameObject.SetActive(true);
-			//spriteRenderer.sprite = sprite;
-		}
+            //spriteRenderer.sprite = sprite;
+
+        }
     }
 
 	public void UpdateSprite()
