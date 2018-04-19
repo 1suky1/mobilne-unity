@@ -99,7 +99,7 @@ public class GameManagerScript : MonoBehaviour {
 
     private void AddReplayButton()
     {
-        var texture = Resources.Load<Texture2D>("Sprites/replay_button");
+        var texture = Resources.Load<Texture2D>("Sprites/button_repeat");
         var sprite = Sprite.Create(texture, new Rect(0, 0, texture.width, texture.height), new Vector2(0.5f, 0.5f));
         //stavljam ime kak bi mogo prepoznat koji je odgovor poslje
         sprite.name = texture.name;
@@ -107,7 +107,7 @@ public class GameManagerScript : MonoBehaviour {
         GameObject button = new GameObject();
 
         button.AddComponent<CanvasRenderer>();
-        button.AddComponent<RectTransform>().sizeDelta = new Vector2(200, 200);
+        button.AddComponent<RectTransform>().sizeDelta = new Vector2(150, 150);
         Button mButton = button.AddComponent<Button>();
         Image mImage = button.AddComponent<Image>();
         mImage.sprite = sprite;

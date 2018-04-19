@@ -1,9 +1,11 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
+using System.Text.RegularExpressions;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
- [ExecuteInEditMode]
+[ExecuteInEditMode]
 public class MenuScript : MonoBehaviour {
 
 	[Header("Update Levels")]
@@ -17,7 +19,7 @@ public class MenuScript : MonoBehaviour {
 	public List<GameObject> levels;
 	//public List<GameObject> levelScores;
 
-	private int numSCenes;
+	private int numScenes = 0;
 	private int cPos; //Position of camera to be saved in player prefs to remember where to start when going back to menu
 
 	// Use this for initialization
@@ -26,7 +28,8 @@ public class MenuScript : MonoBehaviour {
 		//PlayerPrefs.DeleteAll();
 		//Debug.Log("playerprefs called");
 
-		numSCenes = SceneManager.sceneCountInBuildSettings - 1;
+		CountScenes();
+
 		if(PlayerPrefs.HasKey("MenuCameraPos"))
 		{
 			cPos = PlayerPrefs.GetInt("MenuCameraPos");
@@ -36,14 +39,29 @@ public class MenuScript : MonoBehaviour {
 		updateLevels = true;
 			
 	}
-	
+
+	private void CountScenes()
+	{
+		numScenes = 0;
+		int allScenes = SceneManager.sceneCountInBuildSettings;
+
+		string rgx = @"^level\d$";
+		for (int i = 0; i < allScenes; i++)
+		{
+			string name = System.IO.Path.GetFileNameWithoutExtension(SceneUtility.GetScenePathByBuildIndex(i));
+			Match result = Regex.Match(name, rgx);
+			if (result.Success)
+				numScenes++;
+		}
+	}
+
 	// Update is called once per frame
 	void Update ()
 	{
 		if(updateLevels)
 		{
 			updateLevels = false;
-			numSCenes = SceneManager.sceneCountInBuildSettings - 1;
+			CountScenes();
 
 			//delete go + clean list
 			foreach (GameObject go in levels)
@@ -52,7 +70,7 @@ public class MenuScript : MonoBehaviour {
 			}
 			levels.Clear();
 
-			for (int i = 0; i < numSCenes; i++)
+			for (int i = 0; i < numScenes; i++)
 			{
 				GameObject go = new GameObject();
 				go.name = "level" + (i + 1);
@@ -117,7 +135,7 @@ public class MenuScript : MonoBehaviour {
 
 	public void ScrollRight()
 	{
-		if (Camera.main.transform.position.x < (distance * (numSCenes - 1)))
+		if (Camera.main.transform.position.x < (distance * (numScenes - 1)))
 		{
 			Vector3 cameraPos = Camera.main.transform.position;
 			Vector3 target = new Vector3(distance, 0, 0);

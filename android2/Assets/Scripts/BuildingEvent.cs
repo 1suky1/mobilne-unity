@@ -17,9 +17,11 @@ public class BuildingEvent : MonoBehaviour {
 
 	private void OnTriggerEnter2D(Collider2D collision)
 	{
+		string s = SceneManager.GetActiveScene().name;
+
 		if (collision.gameObject.tag == "Player")
 		{
-			SceneManager.LoadScene("level1");
+			SceneManager.LoadScene(s + "_building");
 		}
 	}
 
