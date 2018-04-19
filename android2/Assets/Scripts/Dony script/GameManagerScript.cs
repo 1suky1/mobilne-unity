@@ -99,7 +99,7 @@ public class GameManagerScript : MonoBehaviour {
 
     private void AddReplayButton()
     {
-        var texture = Resources.Load<Texture2D>("Sprites/replay_button");
+        var texture = Resources.Load<Texture2D>("Sprites/Bankgorunds and stuff/replay_button");
         var sprite = Sprite.Create(texture, new Rect(0, 0, texture.width, texture.height), new Vector2(0.5f, 0.5f));
         //stavljam ime kak bi mogo prepoznat koji je odgovor poslje
         sprite.name = texture.name;
