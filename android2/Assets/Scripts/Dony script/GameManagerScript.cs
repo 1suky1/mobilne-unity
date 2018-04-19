@@ -99,11 +99,8 @@ public class GameManagerScript : MonoBehaviour {
 
     private void AddReplayButton()
     {
-<<<<<<< HEAD
+
         var texture = Resources.Load<Texture2D>("Sprites/button_repeat");
-=======
-        var texture = Resources.Load<Texture2D>("Sprites/Bankgorunds and stuff/replay_button");
->>>>>>> 8e3d28b543aece99b0602dba25019db09fe94472
         var sprite = Sprite.Create(texture, new Rect(0, 0, texture.width, texture.height), new Vector2(0.5f, 0.5f));
         //stavljam ime kak bi mogo prepoznat koji je odgovor poslje
         sprite.name = texture.name;
@@ -151,6 +148,8 @@ public class GameManagerScript : MonoBehaviour {
 			//Change sprite on event
 			if(numEvent < Events.Count)
 			{
+				Events[numEvent].GetComponent<EventController>().UpdateSprite();
+				Events[numEvent].GetComponent<EventController>().enabled = false;
 				numEvent++;
 			}
 
