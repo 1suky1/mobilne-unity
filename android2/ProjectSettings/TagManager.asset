@@ -9,6 +9,7 @@ TagManager:
   - Vehicle
   - City_house
   - Village_house
+  - Music
   layers:
   - Default
   - TransparentFX

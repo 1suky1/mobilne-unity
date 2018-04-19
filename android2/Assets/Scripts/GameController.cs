@@ -19,13 +19,15 @@ public class GameController : MonoBehaviour {
 	public Button NextButton;
 	public List<GameObject> Stars;
 
-	[Header("Sprites")]
+    [Header("Sprites")]
 	public Sprite FullStar;
 	public Sprite HalfStar;
 
 	private BaseBuilder BaseBuilder;
+    private AudioSource winSound;
+    private AudioSource loseSound;
 
-	[HideInInspector]
+    [HideInInspector]
 	public List<GameObject> placeables;
 
 	public void Awake()
@@ -35,9 +37,13 @@ public class GameController : MonoBehaviour {
 
 	public void Start()
 	{
-		
+        AudioSource[] answerClips = GetComponents<AudioSource>();
+        winSound = answerClips[0];
+        winSound.volume = 0.5f;
+        loseSound = answerClips[1];
+        loseSound.volume = 0.5f;
 
-		FinishButton.gameObject.SetActive(false);
+        FinishButton.gameObject.SetActive(false);
 		EndScreen.SetActive(false);
 
 		//RepeatButton.GetComponent<RectTransform>().anchoredPosition
@@ -67,21 +73,25 @@ public class GameController : MonoBehaviour {
 		//normalize distance to score
 		float score = 1f - dist;
 
-		//Win should be ~0.2 or less dist
-		/* score
+        //Win should be ~0.2 or less dist
+        /* score
 		 * 0.75 = 1 star
 		 * 0.8 = 1.5 star
 		 * 0.82 = 2 star
 		 * 0.85 = 2.5 star
 		 * 0.9 = 3 star
 		 */
-		//if win show next button and reposition replay button
-		if (score >= 0.75f)
-		{
-			RectTransform rect = RepeatButton.GetComponent<RectTransform>();
-			rect.anchoredPosition = new Vector3(-5.8f, rect.anchoredPosition.y, 0);
-			NextButton.gameObject.SetActive(true);		
-		}
+        //if win show next button and reposition replay button
+        if (score >= 0.75f)
+        {
+            winSound.Play();
+            RectTransform rect = RepeatButton.GetComponent<RectTransform>();
+            rect.anchoredPosition = new Vector3(-5.8f, rect.anchoredPosition.y, 0);
+            NextButton.gameObject.SetActive(true);
+
+        }
+        else
+            loseSound.Play();
 
 		//Show score screen
 		EndScreen.SetActive(true);

@@ -27,14 +27,15 @@ public class GameManagerScript : MonoBehaviour {
     AudioClip[] clips;
     AudioSource rightAnswer;
     AudioSource wrongAnswer;
-
-	private void Awake()
+    public static AudioSource bgMusic;
+    private void Awake()
 	{
 		Screen.orientation = ScreenOrientation.LandscapeLeft;
 	}
 
 	private void Start()
     {
+        bgMusic = GameObject.FindGameObjectWithTag("Music").GetComponent<AudioSource>();
         nextAnswer = false;
         images = Resources.LoadAll<Texture2D>("Sprites/" + this.tag); //load image za pitanja
         canvas.gameObject.SetActive(false); //disable canvas da se ne vidi na pocetku
@@ -128,9 +129,13 @@ public class GameManagerScript : MonoBehaviour {
 		var imageName = EventSystem.current.currentSelectedGameObject.name;
         if (imageName.ToLower().Contains(answer))
         {
-            if(!rightAnswer.isPlaying)
+            if (!bgMusic.isPlaying)
+                bgMusic.UnPause();
+
+            if (!rightAnswer.isPlaying)
                 //play applause
                 rightAnswer.Play();
+
             //remove canvas/answer list/button list
             canvas.gameObject.SetActive(false);
             //allow moving

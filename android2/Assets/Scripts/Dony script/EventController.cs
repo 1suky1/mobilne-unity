@@ -37,6 +37,7 @@ public class EventController : MonoBehaviour {
     {
         if (collision.gameObject.tag == "Player")
         {
+            GameManagerScript.bgMusic.Pause();
             LoadComponents();
             GameManagerScript.PlaySound();
             //spriteRenderer.sortingOrder = 1;
