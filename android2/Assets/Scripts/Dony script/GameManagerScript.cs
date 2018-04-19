@@ -147,8 +147,8 @@ public class GameManagerScript : MonoBehaviour {
 			//Change sprite on event
 			if(numEvent < Events.Count)
 			{
-				Events[numEvent].GetComponent<AnimalController>().UpdateSprite();
-				Events[numEvent].GetComponent<AnimalController>().enabled = false;
+				Events[numEvent].GetComponent<EventController>().UpdateSprite();
+				Events[numEvent].GetComponent<EventController>().enabled = false;
 				numEvent++;
 			}
 

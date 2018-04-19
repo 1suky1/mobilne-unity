@@ -19,7 +19,7 @@ public class BuildingEvent : MonoBehaviour {
 	{
 		if (collision.gameObject.tag == "Player")
 		{
-			SceneManager.LoadScene("level1");
+			SceneManager.LoadScene(this.tag.ToLower());
 		}
 	}
 

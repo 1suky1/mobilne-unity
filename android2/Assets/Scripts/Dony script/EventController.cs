@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 // ovo je zapravo samo za detekciju nekog eventa i loadanje random clipa/answera generiranog u GMScirpt
-public class AnimalController : MonoBehaviour {
+public class EventController : MonoBehaviour {
 
     public PlayerController playerScript;
     public GameManagerScript SelectAnswerScript;
