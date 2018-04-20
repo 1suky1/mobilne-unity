@@ -9,8 +9,8 @@ public class PlayerController : MonoBehaviour {
     Animator animator;
     //zapravo kad player hita neki box, tj triggera event, poanta je da stane i odgovori na pitanje i kasnije krene dalje
     public bool allowMoving;
-	// Use this for initialization
-	void Start () {
+    // Use this for initialization
+    void Start () {
         //rigidbody = GetComponent<Rigidbody2D>();
         animator = GetComponent<Animator>();
         allowMoving = false;
