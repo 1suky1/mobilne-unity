@@ -160,6 +160,9 @@ public class GameController : MonoBehaviour {
 			renderer.FadeSprite(this, 2, (SpriteRenderer r) => 
 				{
 					UnfadeSprites(r);
+					//Create outlines
+					CreateOutlines(p);
+
 					RepositionPlaceables();
 					r.gameObject.GetComponent<BoxCollider2D>().enabled = true;
 					FinishButton.gameObject.SetActive(true);
@@ -172,6 +175,18 @@ public class GameController : MonoBehaviour {
 		Color color = renderer.color;
 		color.a = 255f;
 		renderer.color = color;
+	}
+
+	private void CreateOutlines(GameObject p)
+	{
+		GameObject outline = new GameObject();
+		SpriteRenderer sr = outline.AddComponent<SpriteRenderer>();
+		sr.sprite = p.GetComponent<SpriteRenderer>().sprite;
+		Color c = new Color(1f, 1f, 1f, 0.1f);
+		sr.color = c;
+		outline.name = "Outline - " + p.name;
+		outline.transform.position = new Vector3(p.transform.parent.transform.position.x, p.transform.parent.transform.position.y, 0.5f);
+		
 	}
 
 	public void RepositionPlaceables()
